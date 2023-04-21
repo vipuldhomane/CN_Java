@@ -32,5 +32,6 @@ public class primenum {
 
         // System.out.println(isPrime(n));
         System.out.println(isPrime2(n));
+        sc.close();
     }
 }

@@ -1,3 +1,5 @@
+package Patterns2;
+
 import java.util.*;
 
 /**
