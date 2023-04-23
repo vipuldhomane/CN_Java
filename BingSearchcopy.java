@@ -31,11 +31,6 @@ public class BingSearchcopy {
     public static void main(String[] args) {
         // An example of a string array with some search queries
 
-        // String str1[] = generateRandomWords(10);
-        // String[] queries = { "java tutrial", "bing seach api", "how o use markdown",
-        // "bs", "jva tu", "bng api",
-        // "how markdwn", "ajjs", " tutorkil", "bing sarch ", "how lto use marown",
-        // "lab" };
         String queries[] = generateRandomWords(10);
 
         // Loop through the array and search each query on bing.com
