@@ -1,4 +1,4 @@
-package Module2.LinkedLists.LinkedList.src;
+package Module2.LInkedLists2;
 
 public class Node<T> {
     T data;
@@ -6,7 +6,7 @@ public class Node<T> {
 
     public Node(T data) {
         this.data = data;
-        // this.next = null;
+        // this.next = next;
     }
 
 }

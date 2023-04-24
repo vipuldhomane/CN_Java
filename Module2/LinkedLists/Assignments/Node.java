@@ -1,4 +1,4 @@
-package Module2.LinkedLists.InsertNode;
+package Module2.LinkedLists.Assignments;
 
 public class Node<T> {
     T data;

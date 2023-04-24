@@ -1,4 +1,4 @@
-package Module2.LinkedLists.DeleteNodeLL;
+package Module2.LinkedLists;
 
 public class Node<T> {
     T data;
@@ -8,5 +8,4 @@ public class Node<T> {
         this.data = data;
         // this.next = null;
     }
-
 }

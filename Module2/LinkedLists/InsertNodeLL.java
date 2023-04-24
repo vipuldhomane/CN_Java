@@ -1,44 +1,37 @@
-package Module2.LinkedLists.DeleteNodeLL;
+package Module2.LinkedLists;
 
-import java.util.*;
+import java.util.Scanner;
 
-public class DeleteNodeLL {
-    /*
-     * 
-     * Time Complexity : O(min(pos, n))
-     * Space Complexity : O(1)
-     * Where 'pos' is the position of the node deleted
-     * and 'n' being the size of the Singly Linked List
-     * 
-     */
-
-    public static Node<Integer> deleteNode(Node<Integer> head, int pos) {
-
-        if (head == null) {
-            return head;
-        }
+public class InsertNodeLL {
+    public static Node<Integer> insert(Node<Integer> head, int element, int pos) {
+        Node<Integer> nodeToBeInserted = new Node<Integer>(element);
+        // Separately handle the zeroth position case
 
         if (pos == 0) {
-            return head.next;
-        }
+            // point to head
+            nodeToBeInserted.next = head;
+            // update head
+            head = nodeToBeInserted;
+            return head;
 
-        int count = 0;
-        Node<Integer> currHead = head;
-        while (currHead != null && count < (pos - 1)) {
-            currHead = currHead.next;
-            count++;
-        }
+        } else {
 
-        if (currHead == null || currHead.next == null) {
+            int count = 0;
+            Node<Integer> prev = head;
+            while (count < pos - 1 && prev != null) {
+                count++;
+                prev = prev.next;
+            }
+            // Adding nodeToBeInserted at position using Make Before break principle.
+            // Sequence is very important else it will cause infinite loop
+            if (prev != null) {
+                nodeToBeInserted.next = prev.next;
+                prev.next = nodeToBeInserted;
+            }
             return head;
         }
-
-        currHead.next = currHead.next.next;
-
-        return head;
     }
 
-    // Input
     public static Node<Integer> takeInputN() {
         // Time complexity is O(n)
         Scanner sc = new Scanner(System.in);
@@ -71,8 +64,7 @@ public class DeleteNodeLL {
 
     public static void main(String[] args) {
         Node<Integer> head = takeInputN();
-        head = deleteNode(head, 1);
+        head = insert(head, 1, 2);
         PrintLL(head);
     }
-
 }
