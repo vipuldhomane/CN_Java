@@ -137,10 +137,10 @@ public class LLRecursion {
     }
 
     // Midpoint IN LL
-    public static int Midpoint(Node<Integer> head) {
+    public static Node<Integer> Midpoint(Node<Integer> head) {
 
         if (head == null) {
-            return -1;
+            return head;
         }
         Node<Integer> slow = head, fast = head;
 
@@ -148,7 +148,7 @@ public class LLRecursion {
             slow = slow.next;
             fast = fast.next.next;
         }
-        return slow.data;
+        return slow;
 
     }
 
