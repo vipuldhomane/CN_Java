@@ -11,6 +11,7 @@ public class StackColllections {
         for (int elem : arr) {
             stack.push(elem);
         }
+        stack.peek();
         while (!stack.isEmpty()) {
             System.out.println(stack.pop());
         }
