@@ -402,6 +402,154 @@ public class BinaryTreeUse {
         return root;
     }
 
+    public static BinaryTreeNode<Integer> buildTree(int[] postOrder, int[] inOrder) {
+        // Your code goes here
+        BinaryTreeNode<Integer> root = buildTree(postOrder, inOrder, 0, postOrder.length - 1, 0, inOrder.length - 1);
+        return root;
+    }
+
+    public static BinaryTreeNode<Integer> buildTree(int[] postOrder, int[] inOrder, int siPost, int eiPost, int siIn,
+            int eiIn) {
+        // TODO Auto-generated method stub
+
+        // Base case - If number of elements in the post-order is 0
+        if (siPost > eiPost) {
+            return null;
+        }
+
+        // Defining the root node for current recursion
+        int rootData = postOrder[eiPost];
+        BinaryTreeNode<Integer> root = new BinaryTreeNode<Integer>(rootData);
+
+        // Finding root data's location in Inorder (Assuming root data exists in
+        // Inorder)
+        int rootIndex = -1;
+        for (int i = siIn; i <= eiIn; i++) {
+            if (rootData == inOrder[i]) {
+                rootIndex = i;
+                break;
+            }
+        }
+
+        // Defining index limits for Left Subtree Inorder
+        int siInLeft = siIn;
+        int eiInLeft = rootIndex - 1;
+
+        // Defining the index limits for Left Subtree Preorder
+        int siPostLeft = siPost;
+        int leftSubTreeLength = eiInLeft - siInLeft + 1;
+        int eiPostLeft = (siPostLeft) + (leftSubTreeLength - 1);
+
+        // Defining index limits for Right Subtree Inorder
+        int siInRight = rootIndex + 1;
+        int eiInRight = eiIn;
+
+        // Defining index limits for Right Subtree Preorder
+        int siPostRight = eiPostLeft + 1;
+        int eiPostRight = eiPost - 1;
+
+        BinaryTreeNode<Integer> rightChild = buildTree(postOrder, inOrder, siPostRight, eiPostRight, siInRight,
+                eiInRight);
+        BinaryTreeNode<Integer> leftChild = buildTree(postOrder, inOrder, siPostLeft, eiPostLeft, siInLeft, eiInLeft);
+
+        root.left = leftChild;
+        root.right = rightChild;
+        return root;
+    }
+
+    /*
+     * =============================================================================
+     * =======================
+     */
+    // Assignments
+
+    public static void insertDuplicateNode(BinaryTreeNode<Integer> root) {
+        if (root == null) {
+            return;
+        }
+        insertDuplicateNode(root.left);
+        insertDuplicateNode(root.right);
+        BinaryTreeNode<Integer> Node = new BinaryTreeNode<Integer>(root.data);
+        BinaryTreeNode<Integer> temp = root.left;
+
+        root.left = Node;
+        Node.left = temp;
+
+    }
+
+    // This Function wont work because pair file does not exist in folder
+    // see in Assignments folder
+    public static PairMinMax<Integer, Integer> getMinAndMax(BinaryTreeNode<Integer> root) {
+
+        if (root == null) {
+            return new PairMinMax<>(Integer.MAX_VALUE, Integer.MIN_VALUE);
+        }
+
+        PairMinMax<Integer, Integer> leftPair = getMinAndMax(root.left);
+        PairMinMax<Integer, Integer> rightPair = getMinAndMax(root.right);
+
+        int minimum = Math.min(root.data, Math.min(leftPair.minimum, rightPair.minimum));
+        int maximum = Math.max(root.data, Math.max(leftPair.maximum, rightPair.maximum));
+
+        return new PairMinMax<>(minimum, maximum);
+
+    }
+
+    // Level Order Traversal
+    // Print Level Wise
+    public static void printLevelWiseAssignment(BinaryTreeNode<Integer> root) {
+        // Your code goes here
+
+        if (root == null)
+            return;
+
+        Queue<BinaryTreeNode<Integer>> nodesToPrint = new LinkedList<BinaryTreeNode<Integer>>();
+        nodesToPrint.add(root);
+        nodesToPrint.add(null);
+        while (!nodesToPrint.isEmpty()) {
+            BinaryTreeNode<Integer> front = nodesToPrint.poll();
+            if (front == null) {
+                if (nodesToPrint.isEmpty())
+                    break;
+                else {
+                    System.out.println();
+                    nodesToPrint.add(null);
+                }
+
+            } else {
+                System.out.print(front.data + " ");
+                if (front.left != null)
+                    nodesToPrint.add(front.left);
+                if (front.right != null)
+                    nodesToPrint.add(front.right);
+            }
+        }
+    }
+
+    // Assignment Problem
+    // Path Sum Root to LeafMinMax
+    public static void leafSumPathHelper(BinaryTreeNode<Integer> root, int k, String str) {
+        if (root == null) {
+            return;
+
+        }
+        int rootdata = root.data;
+
+        str += rootdata + " ";
+        if (k == rootdata && root.left == null && root.right == null) {
+            System.out.println(str);
+            return;
+        }
+        leafSumPathHelper(root.left, k - rootdata, str);
+        leafSumPathHelper(root.right, k - rootdata, str);
+    }
+
+    public static void rootToLeafPathsSumToK(BinaryTreeNode<Integer> root, int k) {
+        // Your code goes here
+        String str = "";
+        leafSumPathHelper(root, k, str);
+    }
+
     public static void main(String[] args) {
 
         // BinaryTreeNode<Integer> root = new BinaryTreeNode<Integer>(1);
