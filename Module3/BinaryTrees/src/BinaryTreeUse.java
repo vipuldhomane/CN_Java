@@ -2,8 +2,6 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
 
-import javax.naming.Binding;
-
 public class BinaryTreeUse {
     // take input levelwise
     public static BinaryTreeNode<Integer> takeInputLevelwise() {
@@ -115,6 +113,7 @@ public class BinaryTreeUse {
         System.out.print(root.data + " ");
     }
 
+    // ===========================================================================================//
     public static int numNodes(BinaryTreeNode<Integer> root) {
         if (root == null) {
             return 0;
@@ -126,6 +125,7 @@ public class BinaryTreeUse {
 
     }
 
+    // ===========================================================================================//
     public static int getSum(BinaryTreeNode<Integer> root) {
         // Your code goes here.
         if (root == null) {
@@ -137,17 +137,30 @@ public class BinaryTreeUse {
         return sum;
     }
 
-    public static int largest(BinaryTreeNode<Integer> root) {
+    // ===========================================================================================//
+    public static int maximum(BinaryTreeNode<Integer> root) {
         if (root == null)
-            return -1;
+            return Integer.MIN_VALUE;
 
-        int leftLargest = largest(root.left);
-        int rightLargest = largest(root.right);
+        int leftLargest = maximum(root.left);
+        int rightLargest = maximum(root.right);
 
         return Math.max(root.data, Math.max(leftLargest, rightLargest));
 
     }
 
+    public static int minimum(BinaryTreeNode<Integer> root) {
+        if (root == null)
+            return Integer.MAX_VALUE;
+
+        int leftSmallest = minimum(root.left);
+        int rightSmallest = minimum(root.right);
+
+        return Math.min(root.data, Math.min(leftSmallest, rightSmallest));
+
+    }
+
+    // ===========================================================================================//
     public static int countNodesGreaterThanX(BinaryTreeNode<Integer> root, int x) {
         if (root == null) {
             return 0;
@@ -161,6 +174,7 @@ public class BinaryTreeUse {
         }
     }
 
+    // ===========================================================================================//
     // Height of BT
     public static int height(BinaryTreeNode<Integer> root) {
         // Your code goes here
@@ -172,6 +186,7 @@ public class BinaryTreeUse {
         return 1 + Math.max(leftheight, rightheight);
     }
 
+    // ===========================================================================================//
     // Number of Leafs
     public static int numLeafs(BinaryTreeNode<Integer> root) {
         if (root == null) {
@@ -184,6 +199,7 @@ public class BinaryTreeUse {
         return numLeafs(root.left) + numLeafs(root.right);
 
     }
+    // ===========================================================================================//
 
     public static boolean isNodePresent(BinaryTreeNode<Integer> root, int x) {
         if (root == null) {
@@ -194,6 +210,7 @@ public class BinaryTreeUse {
             return (isNodePresent(root.left, x) || isNodePresent(root.right, x));
         }
     }
+    // ===========================================================================================//
 
     // Depth
     public static void printatDepthK(BinaryTreeNode<Integer> root, int k) {
@@ -207,6 +224,7 @@ public class BinaryTreeUse {
         printatDepthK(root.right, k - 1);
     }
 
+    // ===========================================================================================//
     public static void printNodesWithoutSibling(BinaryTreeNode<Integer> root) {
         // Your code goes here
         if (root == null) {
@@ -221,6 +239,7 @@ public class BinaryTreeUse {
         printNodesWithoutSibling(root.left);
         printNodesWithoutSibling(root.right);
     }
+    // ===========================================================================================//
 
     public static BinaryTreeNode<Integer> removeLeaf(BinaryTreeNode<Integer> root) {
         // base
@@ -236,6 +255,7 @@ public class BinaryTreeUse {
         return root;
 
     }
+    // ===========================================================================================//
 
     public static void mirrorBinaryTree(BinaryTreeNode<Integer> root) {
         // Your code goes here
@@ -251,6 +271,8 @@ public class BinaryTreeUse {
         root.right = temp;
     }
 
+    // ===========================================================================================//
+    // if if tree is balanced
     public static boolean isBalanced(BinaryTreeNode<Integer> root) {
         // base case
         if (root == null)
@@ -293,6 +315,8 @@ public class BinaryTreeUse {
 
     }
 
+    // ==========================================================================================================//
+    // Diameter of Binary tree
     public static int diameterOfBinaryTree(BinaryTreeNode<Integer> root) {
         // Your code goes here
         if (root == null) {
@@ -300,8 +324,15 @@ public class BinaryTreeUse {
         }
         return 1 + height(root.left) + height(root.right);
     }
+
     // Diameter of Binary Tree CN Solution
 
+    public static int diameterOfBinaryTree1(BinaryTreeNode<Integer> root) {
+        Pair pair = diameterHelper(root);
+        return pair.diameter;
+    }
+
+    // Helper Fun
     private static Pair diameterHelper(BinaryTreeNode<Integer> root) {
         if (root == null) {
             Pair pair = new Pair(0, 0);
@@ -327,11 +358,7 @@ public class BinaryTreeUse {
         return (new Pair(diameter, height));
     }
 
-    public static int diameterOfBinaryTree1(BinaryTreeNode<Integer> root) {
-        Pair pair = diameterHelper(root);
-        return pair.diameter;
-    }
-
+    // ========================================================================================================//
     // print levelWise
     public static void printLevelWise(BinaryTreeNode<Integer> root) {
         if (root == null) {
@@ -359,60 +386,69 @@ public class BinaryTreeUse {
             System.out.println();
         }
     }
+    // ===========================================================================================================//
 
-    public static BinaryTreeNode<Integer> buildTreePreInHelper(int pre[], int in[], int siPre, int eiPre, int siIn,
-            int eiIn) {
-        if (siPre > eiPre) {
-            return null;
-        }
-        int rootdata = pre[siPre];
-        BinaryTreeNode<Integer> root = new BinaryTreeNode<Integer>(rootdata);
-
-        // Find Root Index in IN
-        int rootindex = -1;
-        for (int i = siIn; i <= eiIn; i++) {
-            if (in[i] == rootdata) {
-                rootindex = i;
-                break;
-
-            }
-        }
-
-        int siPreLeft = siPre + 1;
-        int siInLeft = siIn;
-        int eiInLeft = rootindex - 1;
-        int siInRight = rootindex + 1;
-        int eiPreRight = eiPre;
-        int eiInRight = eiIn;
-
-        int leftsubtreelen = eiInLeft - siInLeft + 1;
-
-        int eiPreLeft = siPreLeft + leftsubtreelen - 1;
-        int siPreRight = eiPreLeft + 1;
-        BinaryTreeNode<Integer> left = buildTreePreInHelper(pre, in, siPreLeft, eiPreLeft, siInLeft, eiInLeft);
-        BinaryTreeNode<Integer> right = buildTreePreInHelper(pre, in, siPreRight, eiPreRight, siInRight, eiInRight);
-
-        root.left = left;
-        root.right = right;
-        return root;
-    }
+    // Build Tree Using Pre order an In order
 
     public static BinaryTreeNode<Integer> buildTreePreIn(int pre[], int in[]) {
         BinaryTreeNode<Integer> root = buildTreePreInHelper(pre, in, 0, pre.length - 1, 0, in.length - 1);
         return root;
     }
 
-    public static BinaryTreeNode<Integer> buildTree(int[] postOrder, int[] inOrder) {
+    // Helper function
+    public static BinaryTreeNode<Integer> buildTreePreInHelper(int pre[], int in[], int siPre, int eiPre, int siIn,
+            int eiIn) {
+        if (siPre > eiPre) {
+            return null;
+        }
+
+        int rootData = pre[siPre];
+        BinaryTreeNode<Integer> root = new BinaryTreeNode<Integer>(rootData);
+
+        // Find root index in IN
+        int rootIndex = -1;
+        for (int i = siIn; i <= eiIn; i++) {
+            if (in[i] == rootData) {
+                rootIndex = i;
+                break;
+            }
+        }
+
+        // Recursively build left and right subtrees
+        int siPreLeft = siPre + 1;
+        int siInLeft = siIn;
+        int eiInLeft = rootIndex - 1;
+        int siInRight = rootIndex + 1;
+        int eiPreRight = eiPre;
+        int eiInRight = eiIn;
+
+        int leftSubtreeLen = eiInLeft - siInLeft + 1;
+
+        int eiPreLeft = siPreLeft + leftSubtreeLen - 1;
+        int siPreRight = eiPreLeft + 1;
+
+        BinaryTreeNode<Integer> left = buildTreePreInHelper(pre, in, siPreLeft, eiPreLeft, siInLeft, eiInLeft);
+        BinaryTreeNode<Integer> right = buildTreePreInHelper(pre, in, siPreRight, eiPreRight, siInRight, eiInRight);
+
+        // Assign left and right subtrees to root
+        root.left = left;
+        root.right = right;
+
+        return root;
+    }
+
+    // =================================================================================================================//
+
+    public static BinaryTreeNode<Integer> buildTreeUsingPostIn(int[] postOrder, int[] inOrder) {
         // Your code goes here
         BinaryTreeNode<Integer> root = buildTree(postOrder, inOrder, 0, postOrder.length - 1, 0, inOrder.length - 1);
         return root;
     }
 
+    // helper function
     public static BinaryTreeNode<Integer> buildTree(int[] postOrder, int[] inOrder, int siPost, int eiPost, int siIn,
             int eiIn) {
-        // TODO Auto-generated method stub
 
-        // Base case - If number of elements in the post-order is 0
         if (siPost > eiPost) {
             return null;
         }
@@ -549,23 +585,66 @@ public class BinaryTreeUse {
         String str = "";
         leafSumPathHelper(root, k, str);
     }
+    // ===========================================================================================//
+    // Print Nodes At Distance K
+
+    private static int nodesAtDistanceKHelper(BinaryTreeNode<Integer> root, int target, int k) {
+        if (root == null) {
+            return -1;
+        }
+
+        if (root.data == target) {
+            nodesAtDistanceKDown(root, k);
+            return 0;
+        }
+
+        int leftD = nodesAtDistanceKHelper(root.left, target, k);
+        if (leftD != -1) {
+            if (leftD + 1 == k) {
+                System.out.println(root.data);
+            } else {
+                nodesAtDistanceKDown(root.right, k - leftD - 2);
+            }
+
+            return 1 + leftD;
+        }
+
+        int rightD = nodesAtDistanceKHelper(root.right, target, k);
+        if (rightD != -1) {
+            if (rightD + 1 == k) {
+                System.out.println(root.data);
+            } else {
+                nodesAtDistanceKDown(root.left, k - rightD - 2);
+            }
+
+            return 1 + rightD;
+        }
+
+        return -1;
+    }
+
+    private static void nodesAtDistanceKDown(BinaryTreeNode<Integer> root, int k) {
+        if (root == null) {
+            return;
+        }
+        if (k == 0) {
+            System.out.println(root.data);
+            return;
+        }
+
+        nodesAtDistanceKDown(root.left, k - 1);
+        nodesAtDistanceKDown(root.right, k - 1);
+    }
+
+    public static void nodesAtDistanceK(BinaryTreeNode<Integer> root, int node, int k) {
+        nodesAtDistanceKHelper(root, node, k);
+    }
 
     public static void main(String[] args) {
+        int in[] = { 1, 2, 3, 4, 5, 6, 7 };
+        int pre[] = { 4, 2, 1, 3, 6, 5, 7 };
+        BinaryTreeNode<Integer> root = buildTreePreIn(pre, in);
+        printLevelWise(root);
 
-        // BinaryTreeNode<Integer> root = new BinaryTreeNode<Integer>(1);
-        // BinaryTreeNode<Integer> rootLeft = new BinaryTreeNode<Integer>(2);
-        // BinaryTreeNode<Integer> rootRight = new BinaryTreeNode<Integer>(3);
-        // root.left = rootLeft;
-        // root.right = rootRight;
-        // BinaryTreeNode<Integer> twoRight = new BinaryTreeNode<Integer>(4);
-        // BinaryTreeNode<Integer> threeLeft = new BinaryTreeNode<Integer>(5);
-        // rootLeft.right = twoRight;
-        // rootRight.left = threeLeft;
-        // BinaryTreeNode<Integer> root = takeInputBetter(true, 0, false);
-        BinaryTreeNode<Integer> root = takeInputLevelwise();
-        printTree(root);
-        System.out.println(numNodes(root));
-        System.out.println(largest(root));
-        System.out.println(numLeafs(root));
     }
 }
