@@ -160,7 +160,7 @@ public class BinaryTreeUse {
 
     }
 
-    // ===========================================================================================//
+    // ============================================================================================//
     public static int countNodesGreaterThanX(BinaryTreeNode<Integer> root, int x) {
         if (root == null) {
             return 0;
@@ -174,7 +174,7 @@ public class BinaryTreeUse {
         }
     }
 
-    // ===========================================================================================//
+    // =============================================================================================//
     // Height of BT
     public static int height(BinaryTreeNode<Integer> root) {
         // Your code goes here
@@ -186,7 +186,7 @@ public class BinaryTreeUse {
         return 1 + Math.max(leftheight, rightheight);
     }
 
-    // ===========================================================================================//
+    // ==============================================================================================//
     // Number of Leafs
     public static int numLeafs(BinaryTreeNode<Integer> root) {
         if (root == null) {
@@ -199,7 +199,7 @@ public class BinaryTreeUse {
         return numLeafs(root.left) + numLeafs(root.right);
 
     }
-    // ===========================================================================================//
+    // ===============================================================================================//
 
     public static boolean isNodePresent(BinaryTreeNode<Integer> root, int x) {
         if (root == null) {
@@ -210,7 +210,7 @@ public class BinaryTreeUse {
             return (isNodePresent(root.left, x) || isNodePresent(root.right, x));
         }
     }
-    // ===========================================================================================//
+    // ================================================================================================//
 
     // Depth
     public static void printatDepthK(BinaryTreeNode<Integer> root, int k) {
@@ -224,7 +224,7 @@ public class BinaryTreeUse {
         printatDepthK(root.right, k - 1);
     }
 
-    // ===========================================================================================//
+    // ================================================================================================//
     public static void printNodesWithoutSibling(BinaryTreeNode<Integer> root) {
         // Your code goes here
         if (root == null) {
