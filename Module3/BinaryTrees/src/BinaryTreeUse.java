@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
@@ -34,8 +35,8 @@ public class BinaryTreeUse {
         return root;
     }
 
-    public static BinaryTreeNode<Integer> takeInputBetter(boolean isroot, int parentdata, boolean isleft) {
-        if (isroot) {
+    public static BinaryTreeNode<Integer> takeInputBetter(boolean isRoot, int parentdata, boolean isleft) {
+        if (isRoot) {
             System.out.println("Enter root data");
         } else {
             if (isleft) {
@@ -103,7 +104,7 @@ public class BinaryTreeUse {
 
     }
 
-    // A program for Postorder Traversal
+    // A program for Post-order Traversal
     public static void postOrder(BinaryTreeNode<Integer> root) {
         if (root == null) {
             return;
@@ -131,9 +132,9 @@ public class BinaryTreeUse {
         if (root == null) {
             return 0;
         }
-        int leftdata = getSum(root.left);
-        int rightdata = getSum(root.right);
-        int sum = root.data + leftdata + rightdata;
+        int leftData = getSum(root.left);
+        int rightData = getSum(root.right);
+        int sum = root.data + leftData + rightData;
         return sum;
     }
 
@@ -181,12 +182,12 @@ public class BinaryTreeUse {
         if (root == null) {
             return 0;
         }
-        int leftheight = height(root.left);
-        int rightheight = height(root.right);
-        return 1 + Math.max(leftheight, rightheight);
+        int leftHeight = height(root.left);
+        int rightHeight = height(root.right);
+        return 1 + Math.max(leftHeight, rightHeight);
     }
 
-    // ==============================================================================================//
+    // =============================================================================================//
     // Number of Leafs
     public static int numLeafs(BinaryTreeNode<Integer> root) {
         if (root == null) {
@@ -213,15 +214,15 @@ public class BinaryTreeUse {
     // ================================================================================================//
 
     // Depth
-    public static void printatDepthK(BinaryTreeNode<Integer> root, int k) {
+    public static void printAtDepthK(BinaryTreeNode<Integer> root, int k) {
         if (root == null)
             return;
         if (root.data == k) {
             System.out.println(root.data);
             return;
         }
-        printatDepthK(root.left, k - 1);
-        printatDepthK(root.right, k - 1);
+        printAtDepthK(root.left, k - 1);
+        printAtDepthK(root.right, k - 1);
     }
 
     // ================================================================================================//
@@ -278,10 +279,10 @@ public class BinaryTreeUse {
         if (root == null)
             return true;
 
-        int leftheight = height(root.left);
-        int rightheight = height(root.right);
+        int leftHeight = height(root.left);
+        int rightHeight = height(root.right);
 
-        if (Math.abs(leftheight - rightheight) > 1) {
+        if (Math.abs(leftHeight - rightHeight) > 1) {
             return false;
         }
         boolean isLeftBalanced = isBalanced(root.left);
@@ -364,21 +365,21 @@ public class BinaryTreeUse {
         if (root == null) {
             return;
         }
-        Queue<BinaryTreeNode<Integer>> nodestoPrint = new LinkedList<>();
-        nodestoPrint.add(root);
-        while (!nodestoPrint.isEmpty()) {
-            BinaryTreeNode<Integer> front = nodestoPrint.poll();
+        Queue<BinaryTreeNode<Integer>> nodesToPrint = new LinkedList<>();
+        nodesToPrint.add(root);
+        while (!nodesToPrint.isEmpty()) {
+            BinaryTreeNode<Integer> front = nodesToPrint.poll();
             System.out.print(front.data + ":");
 
-            // Checking for childs
+            // Checking for child
             if (front.left != null) {
-                nodestoPrint.add(front.left);
+                nodesToPrint.add(front.left);
                 System.out.print("L:" + front.left.data);
             } else {
                 System.out.print("L:-1");
             }
             if (front.right != null) {
-                nodestoPrint.add(front.right);
+                nodesToPrint.add(front.right);
                 System.out.print(",R:" + front.right.data);
             } else {
                 System.out.print(",R:-1");
@@ -388,7 +389,7 @@ public class BinaryTreeUse {
     }
     // ===========================================================================================================//
 
-    // Build Tree Using Pre order an In order
+    // Build Tree Using Pre order an I+-n order
 
     public static BinaryTreeNode<Integer> buildTreePreIn(int pre[], int in[]) {
         BinaryTreeNode<Integer> root = buildTreePreInHelper(pre, in, 0, pre.length - 1, 0, in.length - 1);
@@ -457,8 +458,8 @@ public class BinaryTreeUse {
         int rootData = postOrder[eiPost];
         BinaryTreeNode<Integer> root = new BinaryTreeNode<Integer>(rootData);
 
-        // Finding root data's location in Inorder (Assuming root data exists in
-        // Inorder)
+        // Finding root data's location in In-order (Assuming root data exists in
+        // In-order)
         int rootIndex = -1;
         for (int i = siIn; i <= eiIn; i++) {
             if (rootData == inOrder[i]) {
@@ -467,20 +468,20 @@ public class BinaryTreeUse {
             }
         }
 
-        // Defining index limits for Left Subtree Inorder
+        // Defining index limits for Left Subtree In-order
         int siInLeft = siIn;
         int eiInLeft = rootIndex - 1;
 
-        // Defining the index limits for Left Subtree Preorder
+        // Defining the index limits for Left Subtree Pre-order
         int siPostLeft = siPost;
         int leftSubTreeLength = eiInLeft - siInLeft + 1;
         int eiPostLeft = (siPostLeft) + (leftSubTreeLength - 1);
 
-        // Defining index limits for Right Subtree Inorder
+        // Defining index limits for Right Subtree In-order
         int siInRight = rootIndex + 1;
         int eiInRight = eiIn;
 
-        // Defining index limits for Right Subtree Preorder
+        // Defining index limits for Right Subtree Pre-order
         int siPostRight = eiPostLeft + 1;
         int eiPostRight = eiPost - 1;
 
@@ -638,6 +639,31 @@ public class BinaryTreeUse {
 
     public static void nodesAtDistanceK(BinaryTreeNode<Integer> root, int node, int k) {
         nodesAtDistanceKHelper(root, node, k);
+    }
+
+    // ========================================================================================//
+    // Find path from Node to Linked List
+    public static ArrayList<Integer> nodeToRootPath(BinaryTreeNode<Integer> root, int x) {
+        if (root == null) {
+            return null;
+        }
+        if (root.data == x) {
+            ArrayList<Integer> output = new ArrayList<>();
+            output.add(root.data);
+            return output;
+        }
+        ArrayList<Integer> leftOutput = nodeToRootPath(root.left, x);
+        if (leftOutput != null) {
+            leftOutput.add(root.data);
+            return leftOutput;
+        }
+        ArrayList<Integer> rightOutput = nodeToRootPath(root.right, x);
+        if (rightOutput != null) {
+            rightOutput.add(root.data);
+            return rightOutput;
+        }
+        return null;
+
     }
 
     public static void main(String[] args) {

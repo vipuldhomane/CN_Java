@@ -1,4 +1,3 @@
-import javax.swing.text.html.HTMLDocument.HTMLReader.PreAction;
 
 public class BInaryTreeUse2 extends BinaryTreeUse {
     public static BinaryTreeNode<Integer> removeLeaf(BinaryTreeNode<Integer> root) {

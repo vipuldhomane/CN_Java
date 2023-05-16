@@ -1,109 +1,131 @@
+/*
+* building BST Class for using in abstraction
+ */
 
-public class BST extends BinaryTreeUse {
-    public static boolean searchBST(BinaryTreeNode<Integer> root, int k) {
-        if (root == null) {
+public class BST {
+    BinaryTreeNode<Integer> root;
+    int size;
+
+    // As the main function does not take bstnode as input argument using helper
+    // function to call recursion
+    public static boolean isPresentHelper(BinaryTreeNode<Integer> node, int x) {
+        if (node == null) {
             return false;
         }
-        if (root.data == k) {
+        if (node.data == x) {
             return true;
         }
-        if (k < root.data) {
-            return searchBST(root.left, k);
+        if (x < node.data) {
+            return isPresentHelper(node.left, x);
         }
-        return searchBST(root.right, k);
+        return isPresentHelper(node.right, x);
     }
 
-    public static void printInRangeK1K2(BinaryTreeNode<Integer> root, int k1, int k2) {
+    public boolean isPresent(int x) {
+        return isPresentHelper(root, x);
+    }
+
+    public static BinaryTreeNode<Integer> insertHelper(BinaryTreeNode<Integer> root, int x) {
         if (root == null) {
-            return;
+            BinaryTreeNode<Integer> newRoot = new BinaryTreeNode<Integer>(x);
+            return newRoot;
         }
-        if (root.data < k1) {
-            printInRangeK1K2(root.right, k1, k2);
-        } else if (root.data > k2) {
-            printInRangeK1K2(root.left, k1, k2);
+        if (x >= root.data) {
+            root.right = insertHelper(root.right, x);
+
         } else {
-            System.out.print(root.data + " ");
-            printInRangeK1K2(root.left, k1, k2);
-            printInRangeK1K2(root.right, k1, k2);
+            root.left = insertHelper(root.left, x);
         }
-
-    }
-
-    // Assignment Problem
-    /*
-     * Given a Binary Search Tree and two integers k1 and k2, find and print the
-     * elements which are in range k1 and k2 (both inclusive).
-     */
-    public static void elementsInRangeK1K2(BinaryTreeNode<Integer> root, int k1, int k2) {
-        if (root == null) {
-            return;
-        }
-        if (root.data >= k1 && root.data <= k2) {
-            elementsInRangeK1K2(root.left, k1, k2);
-            System.out.print(root.data + " ");
-            elementsInRangeK1K2(root.right, k1, k2);
-        }
-        if (root.data < k1) {
-            elementsInRangeK1K2(root.right, k1, k2);
-        }
-        if (root.data > k2) {
-            elementsInRangeK1K2(root.left, k1, k2);
-        }
-    }
-    // ============================================================================================//
-    // Build tree using Sorted Array
-
-    public static BinaryTreeNode<Integer> SortedArrayToBST(int[] arr, int n) {
-        return SortedArrayToBSTHelper(arr, 0, n - 1);
-    }
-
-    // helper
-    public static BinaryTreeNode<Integer> SortedArrayToBSTHelper(int[] arr, int si, int ei) {
-
-        if (si > ei) {
-            return null;
-        }
-        // finding mid
-        int mid = (si + ei) / 2;
-        // create a node with mid
-        BinaryTreeNode<Integer> root = new BinaryTreeNode<Integer>(arr[mid]);
-
-        // build rest of the tree using recursion
-
-        root.left = SortedArrayToBSTHelper(arr, si, mid - 1);
-        root.right = SortedArrayToBSTHelper(arr, mid + 1, ei);
         return root;
     }
 
-    // Check if Balanced tree;
-    public static boolean checkBST(BinaryTreeNode<Integer> root) {
-        if (root == null) {
-            return true;
-        }
-        int leftMax = maximum(root.left);
-        if (leftMax >= root.data) {
-            return false;
-        }
-        int rightMin = minimum(root.right);
-        if (rightMin < root.data) {
-            return false;
-        }
-        boolean isLeftBalanced = checkBST(root.left);
-        boolean isRightBalanced = checkBST(root.right);
-        return isLeftBalanced && isRightBalanced;
+    public void insert(int x) {
+        root = insertHelper(root, x);
+        size++;
     }
 
-    public static void main(String[] args) {
-        int in[] = { 1, 2, 3, 4, 5, 6, 7 };
-        int pre[] = { 4, 2, 1, 3, 6, 5, 7 };
+    public static int minimum(BinaryTreeNode<Integer> node) {
+        if (node == null)
+            return Integer.MAX_VALUE;
+        int leftSmallest = minimum(node.left);
+        int rightSmallest = minimum(node.right);
+        return Math.min(node.data, Math.min(leftSmallest, rightSmallest));
+    }
 
-        // BinaryTreeNode<Integer> root = buildTreePreIn(pre, in);
-        // printLevelWise(root);
-        // printInRangeK1K2(root, 3, 6);
-        // System.out.println(searchBST(root, 56));
-        int arr[] = { 30, 40, 45, 50, 60, 70, 80 };
-        BinaryTreeNode<Integer> root = SortedArrayToBST(arr, arr.length);
-        printLevelWise(root);
-        System.out.println(checkBST(root));
+    public static BSTDeleteReturn deleteDataHelper(BinaryTreeNode<Integer> root, int x) {
+        // Base case
+        if (root == null) {
+            return new BSTDeleteReturn(null, false);
+        }
+        // Case 1 root data < x call on right side
+        if (root.data < x) {
+            BSTDeleteReturn outputRight = deleteDataHelper(root.right, x);
+            root.right = outputRight.root;
+            outputRight.root = root;
+            return outputRight;
+        }
+        // Case 2 root data > x call on left side
+        if (root.data > x) {
+            BSTDeleteReturn outputLeft = deleteDataHelper(root.left, x);
+            root.left = outputLeft.root;
+            outputLeft.root = root;
+            return outputLeft;
+        }
+        // Case 4
+        // Sub Case 1 root with no child
+        if (root.left == null && root.right == null) {
+            return new BSTDeleteReturn(null, true);
+        }
+        // Sub Case 3 root with 1 child
+        // left child
+        if (root.left != null && root.right == null) {
+            return new BSTDeleteReturn(root.left, true);
+        }
+        // right child
+        if (root.left == null && root.right != null) {
+            return new BSTDeleteReturn(root.right, true);
+        }
+        // having 2 child
+        // find the minimum on right side
+        int rightMin = minimum(root.right);
+        root.data = rightMin;
+        BSTDeleteReturn outputRight = deleteDataHelper(root.right, rightMin);
+        root.right = outputRight.root;
+        return new BSTDeleteReturn(root, true);
+    }
+
+    public boolean deleteData(int x) {
+        BSTDeleteReturn output = deleteDataHelper(root, x);
+        root = output.root;
+        if (output.deleted) {
+            size--;
+        }
+        return output.deleted;
+    }
+
+    public int size() {
+        return size;
+    }
+
+    private void printTree(BinaryTreeNode<Integer> node) {
+        // Pre order Traversal
+        if (node == null)
+            return;
+        System.out.print(node.data + ":");
+        if (node.left != null) {
+            System.out.print("L" + node.left.data + ",");
+        }
+        if (node.right != null) {
+            System.out.print("R" + node.right.data);
+        }
+        System.out.println();
+        printTree(node.left);
+        printTree(node.right);
+
+    }
+
+    public void print() {
+        printTree(root);
+
     }
 }
