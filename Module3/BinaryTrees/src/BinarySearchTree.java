@@ -128,19 +128,19 @@ public class BinarySearchTree extends BinaryTreeUse {
     }
 
     // Another Approach to checkBST
-    public static boolean isBST(BinaryTreeNode<Integer> root) {
-        return isBST3(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
+    public static boolean isBST3(BinaryTreeNode<Integer> root) {
+        return isBST3Helper(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
     }
 
-    public static boolean isBST3(BinaryTreeNode<Integer> root, int minRange, int maxRange) {
+    public static boolean isBST3Helper(BinaryTreeNode<Integer> root, int minRange, int maxRange) {
         if (root == null) {
             return true;
         }
         if (root.data < minRange || root.data > maxRange) {
             return false;
         }
-        boolean isLeftBalanced = isBST3(root.left, minRange, root.data - 1);
-        boolean isRightBalanced = isBST3(root.right, root.data, maxRange);
+        boolean isLeftBalanced = isBST3Helper(root.left, minRange, root.data - 1);
+        boolean isRightBalanced = isBST3Helper(root.right, root.data, maxRange);
 
         return isLeftBalanced && isRightBalanced;
 
