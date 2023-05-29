@@ -1,5 +1,9 @@
 package Module3.Recursion3.Assignment;
 
+import javax.swing.text.html.HTMLEditorKit;
+
+import Module3.PriorityQueues.inbuilt;
+
 public class ReturnSubsetSumToK {
     // Return a 2D array that contains all the subsets which sum to k
     public static int[][] subset(int input[], int si, int k) {
@@ -39,8 +43,8 @@ public class ReturnSubsetSumToK {
     }
 
     // CN Solution
-    public static int[][] subsetsSumKHelper(int[] input, int beginIndex, int k) {
-        if (beginIndex == input.length) {
+    public static int[][] subsetsSumKHelper(int[] input, int startIndex, int k) {
+        if (startIndex == input.length) {
             if (k == 0) {
                 return new int[1][0];
             } else {
@@ -48,8 +52,8 @@ public class ReturnSubsetSumToK {
             }
         }
 
-        int[][] smallOutput1 = subsetsSumKHelper(input, beginIndex + 1, k);
-        int[][] smallOutput2 = subsetsSumKHelper(input, beginIndex + 1, k - input[beginIndex]);
+        int[][] smallOutput1 = subsetsSumKHelper(input, startIndex + 1, k);
+        int[][] smallOutput2 = subsetsSumKHelper(input, startIndex + 1, k - input[startIndex]);
         int[][] output = new int[smallOutput1.length + smallOutput2.length][];
         int index = 0;
         for (int i = 0; i < smallOutput1.length; i++) {
@@ -58,7 +62,7 @@ public class ReturnSubsetSumToK {
 
         for (int i = 0; i < smallOutput2.length; i++) {
             output[index] = new int[smallOutput2[i].length + 1];
-            output[index][0] = input[beginIndex];
+            output[index][0] = input[startIndex];
             for (int j = 0; j < smallOutput2[i].length; j++) {
                 output[index][j + 1] = smallOutput2[i][j];
             }
@@ -69,6 +73,56 @@ public class ReturnSubsetSumToK {
 
     public static int[][] subsetsSumKCN(int input[], int k) {
         return subsetsSumKHelper(input, 0, k);
+    }
+
+    // My version
+    public static int[][] subsetsSumKmv(int input[], int k) {
+        return helper(input, 0, k);
+    }
+
+    private static int[][] helper(int[] input, int si, int k) {
+        // base case
+        if (si == input.length) {
+            if (k == 0) {
+                return new int[1][0];
+            } else {
+                return new int[0][0];
+            }
+        }
+        // Run Recursion
+        // one with included
+        int[][] smallOutput1 = helper(input, si + 1, k);
+
+        int[][] smallOutput2 = helper(input, si + 1, k - input[si]);
+        int[][] output = new int[smallOutput1.length + smallOutput2.length][];
+
+        int index = 0;
+        // all all elements to op
+        for (int[] i : smallOutput1) {
+            output[index++] = i;
+        }
+        // all elements but before add si in the begining
+        for (int i = 0; i < smallOutput2.length; i++) {
+            output[index] = new int[smallOutput2[i].length + 1];
+            output[index][0] = input[si];
+            for (int j = 0; j < smallOutput2[i].length; j++) {
+                output[index][j + 1] = smallOutput2[i][j];
+            }
+            index++;
+        }
+        return output;
+
+    }
+
+    public static void main(String[] args) {
+        int arr[] = { 3, 2, 5, 1, 4, 6 };
+        int[][] ans = subsetsSumKCN(arr, 0);
+        for (int i = 0; i < ans.length; i++) {
+            for (int j = 0; j < ans[i].length; j++) {
+                System.out.print(ans[i][j] + " ");
+            }
+            System.out.println();
+        }
     }
 }
 /*
