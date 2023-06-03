@@ -1,11 +1,11 @@
 package DSA;
 
 public class ReverseArray {
-    public static void reverese(int arr[]int i, int j) {
-        while(i<j){
-            temp = arr[i];
-            arr[j]= arr[i];
-            arr[i]= temp;
+    public static void reverese(int arr[], int i, int j) {
+        while (i < j) {
+            int temp = arr[i];
+            arr[j] = arr[i];
+            arr[i] = temp;
             i++;
             j--;
         }

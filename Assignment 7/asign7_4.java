@@ -7,7 +7,7 @@ public class asign7_4 {
         int temp = sc.nextInt();
         double dec = 0;
         int i = 0;
-        int temp = temp;
+        // int temp = temp;
         while (temp != 0) {
             Double bv = Math.pow(2, i);
             int digit = temp % 10;

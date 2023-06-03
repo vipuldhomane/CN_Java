@@ -1,0 +1,3 @@
+Dynamic programing is sotoring the recursion data in some storage
+in the recursive approach for fibonnachi number the call was being made for same number again and again
+this made time complexity very bad which will cause in runtime error

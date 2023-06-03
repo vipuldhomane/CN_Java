@@ -1,8 +1,5 @@
-package CN_Java.inputsinjava;
 
 import java.util.Scanner;
-
-import Loops.for_loops.print_100times;
 
 public class takingInputs {
     public static void main(String[] args) {

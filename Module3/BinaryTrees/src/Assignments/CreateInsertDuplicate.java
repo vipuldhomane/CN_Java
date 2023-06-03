@@ -4,6 +4,9 @@ Send Feedback
 For a given a Binary Tree of type integer, duplicate every node of the tree and attach it to the left of itself.
 The root will remain the same. So you just need to insert nodes in the given Binary Tree.
  */
+
+import Module3.BinaryTrees.src.BinaryTreeNode;
+
 public class CreateInsertDuplicate {
     public static void insertDuplicateNode(BinaryTreeNode<Integer> root) {
         // Your code goes here

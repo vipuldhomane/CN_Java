@@ -1,4 +1,4 @@
-package Module2.LInkedLists2;
+package Module2.LInkedLists2.Assignment;
 
 public class Node<T> {
     T data;
