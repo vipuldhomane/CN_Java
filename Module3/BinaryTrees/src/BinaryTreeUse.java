@@ -598,6 +598,7 @@ public class BinaryTreeUse {
             nodesAtDistanceKDown(root, k);
             return 0;
         }
+        printLevelWise(root);
 
         int leftD = nodesAtDistanceKHelper(root.left, target, k);
         if (leftD != -1) {
