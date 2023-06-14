@@ -136,12 +136,17 @@ public class BinarySearchTree extends BinaryTreeUse {
         if (root == null) {
             return true;
         }
+        // False if root is out of any one range.
         if (root.data < minRange || root.data > maxRange) {
             return false;
         }
+        // pass the range in recursion as per BST Condition left max should be root-1
+        // and
+        // right min should be greater or equal to root value
         boolean isLeftBalanced = isBST3Helper(root.left, minRange, root.data - 1);
         boolean isRightBalanced = isBST3Helper(root.right, root.data, maxRange);
 
+        // Return true if both are True
         return isLeftBalanced && isRightBalanced;
 
     }
@@ -335,13 +340,7 @@ public class BinarySearchTree extends BinaryTreeUse {
 
     // For BST Only
     public static ArrayList<Integer> getPath(BinaryTreeNode<Integer> root, int data) {
-        /*
-         * Your class should be named Solution
-         * Don't write main().
-         * Don't read input, it is passed as function argument.
-         * Return output and don't print it.
-         * Taking input and printing output is handled automatically.
-         */
+
         if (root == null) {
             return null;
 

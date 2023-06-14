@@ -10,11 +10,14 @@ public class HasPath {
         while (!q.isEmpty()) {
             int currentVertex = q.poll();
             visited[currentVertex] = true;
+            // check if we reached the destination
             if (currentVertex == d) {
                 return true;
             }
             for (int i = 0; i < n; i++) {
                 if (adjMat[currentVertex][i] == 1 && visited[i] == false) {
+
+                    // the the element in the queue and mark it as visited
                     q.add(i);
                     visited[i] = true;
                 }

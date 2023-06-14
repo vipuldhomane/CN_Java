@@ -44,6 +44,20 @@ public class AdjecencyMat {
         }
     }
 
+    public static void countIsland(int[][] adjMat) {
+        boolean visited[] = new boolean[adjMat.length];
+        int count = 0;
+        for (int i = 0; i < adjMat.length; i++) {
+            if (!visited[i]) {
+
+                dfTraversal(adjMat, i, visited);
+                count++;
+                System.out.println();
+            }
+        }
+        System.out.println(count);
+    }
+
     public static void main(String[] args) {
         Scanner s = new Scanner(System.in);
         int n = s.nextInt();
@@ -69,6 +83,7 @@ public class AdjecencyMat {
             System.out.println();
         }
         dfTraversal(adjMat);
+        countIsland(adjMat);
         // int[][] mat = { { 0, 1, 0, 1 },
         // { 1, 0, 1, 0 },
         // { 0, 1, 0, 0 },
@@ -76,5 +91,6 @@ public class AdjecencyMat {
         // dfTraversal(mat);
         // System.out.println();
         // bftraversal(mat);
+        s.close();
     }
 }
