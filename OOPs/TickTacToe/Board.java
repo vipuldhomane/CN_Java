@@ -1,7 +1,5 @@
 package OOPs.TickTacToe;
 
-import javax.swing.plaf.ColorUIResource;
-
 public class Board {
     private char board[][];
     private int boardSize = 3;

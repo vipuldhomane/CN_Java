@@ -668,10 +668,16 @@ public class BinaryTreeUse {
     }
 
     public static void main(String[] args) {
-        int in[] = { 1, 2, 3, 4, 5, 6, 7 };
-        int pre[] = { 4, 2, 1, 3, 6, 5, 7 };
-        BinaryTreeNode<Integer> root = buildTreePreIn(pre, in);
-        printLevelWise(root);
+        // int in[] = { 1, 2, 3, 4, 5, 6, 7 };
+        // int pre[] = { 4, 2, 1, 3, 6, 5, 7 };
+        // BinaryTreeNode<Integer> root = buildTreePreIn(pre, in);
+        // printLevelWise(root);
 
+        BinaryTreeNode<Integer> root= takeInputLevelwise();
+        printLevelWise(root);
+        inOrder(root);
+        postOrder(root);
+        printTree(root);
+        
     }
 }

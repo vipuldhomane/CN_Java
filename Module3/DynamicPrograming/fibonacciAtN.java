@@ -50,6 +50,7 @@ public class fibonacciAtN {
         }
         System.out.println(fibAtN(n, dp));
 
-        System.out.println(fibAtNIterative(30));
+        System.out.println(fibAtNIterative(10
+        ));
     }
 }
